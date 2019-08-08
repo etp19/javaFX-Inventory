@@ -1,14 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inventorysystem.FXMLDocumentController">
-    <children>
-        <Button layoutX="126" layoutY="90" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
-    </children>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1156.0" style="-fx-background-color: #263238;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <JFXButton buttonType="RAISED" layoutX="962.0" layoutY="432.0" prefHeight="43.0" prefWidth="95.0" style="-fx-background-color: #9c2b27; -fx-text-fill: #ffffff;" text="Exit" />
+      <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="459.0" layoutY="30.0" style="-fx-text-fill: #ffffff; -fx-font-size: 18;" text="Inventory Managment System" textAlignment="CENTER" AnchorPane.leftAnchor="459.0" />
+      <AnchorPane layoutX="97.0" layoutY="105.0" prefHeight="291.0" prefWidth="472.0" style="-fx-background-color: #78909c;">
+         <children>
+            <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="14.0" layoutY="15.0" style="-fx-text-fill: #ffffff; -fx-font-size: 15;" text="Parts" textAlignment="CENTER" />
+            <JFXTextField focusColor="#9c2b27" layoutX="297.0" layoutY="12.0" prefHeight="26.0" prefWidth="161.0" promptText="Search" unFocusColor="WHITE" />
+            <TableView layoutX="50.0" layoutY="59.0" prefHeight="176.0" prefWidth="378.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Part ID" />
+                <TableColumn prefWidth="75.0" text="Part Name" />
+                  <TableColumn prefWidth="108.3333740234375" text="Invertory level" />
+                  <TableColumn prefWidth="98.6666259765625" text="Cost per Unit" />
+              </columns>
+            </TableView>
+            <JFXButton layoutX="229.0" layoutY="249.0" style="-fx-background-color: #9c2b27; -fx-text-fill: #ffffff;" text="Add" />
+            <JFXButton layoutX="294.0" layoutY="249.0" style="-fx-background-color: #9c2b27; -fx-text-fill: #ffffff;" text="Modified" />
+            <JFXButton layoutX="374.0" layoutY="249.0" style="-fx-background-color: #9c2b27; -fx-text-fill: #ffffff;" text="Delete" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="585.0" layoutY="105.0" prefHeight="291.0" prefWidth="472.0" style="-fx-background-color: #78909c;">
+         <children>
+            <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="26.0" layoutY="12.0" style="-fx-text-fill: #ffffff; -fx-font-size: 15;" text="Products" textAlignment="CENTER" />
+            <JFXTextField focusColor="#9c2b27" layoutX="297.0" layoutY="9.0" prefHeight="26.0" prefWidth="161.0" promptText="Search" unFocusColor="WHITE" />
+            <TableView layoutX="47.0" layoutY="58.0" prefHeight="176.0" prefWidth="378.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="Product ID" />
+                  <TableColumn prefWidth="90.333251953125" text="Product Name" />
+                  <TableColumn prefWidth="104.6666259765625" text="Inventory Level" />
+                  <TableColumn prefWidth="85.6666259765625" text="Price Per Unit" />
+               </columns>
+            </TableView>
+            <JFXButton layoutX="227.0" layoutY="249.0" style="-fx-background-color: #9c2b27; -fx-text-fill: #ffffff;" text="Add" />
+            <JFXButton layoutX="292.0" layoutY="249.0" style="-fx-background-color: #9c2b27; -fx-text-fill: #ffffff;" text="Modified" />
+            <JFXButton layoutX="371.0" layoutY="249.0" style="-fx-background-color: #9c2b27; -fx-text-fill: #ffffff;" text="Delete" />
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>
