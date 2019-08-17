@@ -24,6 +24,21 @@ public class Product {
     protected IntegerProperty min;
     protected IntegerProperty max;
     
+    public IntegerProperty productIDProperty() {
+        return id;
+    }
+
+    public StringProperty productNameProperty() {
+        return name;
+    }
+
+    public DoubleProperty productPriceProperty() {
+        return price;
+    }
+
+    public IntegerProperty productInvProperty() {
+        return stock;
+    }
     
     public void setId(int id){
         this.id.set(id);
@@ -73,8 +88,8 @@ public class Product {
         return this.max.get();
     }
     
-    public void addAssociatedPart(Part part){
-        this.associatedParts.add(part);
+    public void addAssociatedPart(ObservableList<Part> associatedParts){
+        this.associatedParts = associatedParts;
     }
     
     public void deleteAssociatedPart(Part associatedPart){

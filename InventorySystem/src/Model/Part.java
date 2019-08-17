@@ -21,6 +21,23 @@ public abstract class Part {
     protected IntegerProperty min;
     protected IntegerProperty max;
     
+    public IntegerProperty partIDproperty() {
+        return id;
+    }
+
+    public StringProperty partNameProperty() {
+        return name;
+    }
+
+    public DoubleProperty partPriceProperty() {
+        return price;
+    }
+
+    public IntegerProperty partInvProperty() {
+        return stock;
+    }
+
+    
     public void setId(int id){
         this.id.set(id);
     }

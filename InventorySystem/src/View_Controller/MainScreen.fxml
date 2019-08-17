@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="23.0" layoutY="29.0" text="Inventory Managment System">
@@ -18,7 +17,7 @@
             <Font name="Calibri Bold" size="23.0" />
          </font>
       </Label>
-      <Button layoutX="954.0" layoutY="501.0" minWidth="70.0" mnemonicParsing="false" prefHeight="30.0" text="Exit">
+      <Button layoutX="954.0" layoutY="501.0" minWidth="70.0" mnemonicParsing="false" onAction="#exitProgram" prefHeight="30.0" text="Exit">
          <font>
             <Font name="Calibri Bold" size="15.0" />
          </font>
@@ -44,22 +43,22 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <TableView layoutX="7.0" layoutY="71.0" prefHeight="200.0" prefWidth="475.0">
+            <TableView fx:id="tableViewPart" layoutX="7.0" layoutY="71.0" prefHeight="200.0" prefWidth="475.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Part ID" />
-                <TableColumn prefWidth="75.0" text="Part Name" />
-                  <TableColumn prefWidth="108.33331298828125" text="Inventory Level" />
-                  <TableColumn prefWidth="138.0" text="Price/Cost Per Unit" />
+                <TableColumn fx:id="partIdColumn" prefWidth="75.0" text="Part ID" />
+                <TableColumn fx:id="partNameColumn" prefWidth="75.0" text="Part Name" />
+                  <TableColumn fx:id="partInvLevelColumn" prefWidth="108.33331298828125" text="Inventory Level" />
+                  <TableColumn fx:id="partPricePerUnitColumn" prefWidth="138.0" text="Price/Cost Per Unit" />
               </columns>
             </TableView>
             <HBox layoutX="274.0" layoutY="283.0" prefHeight="30.0" prefWidth="202.0">
                <children>
-                  <Button minWidth="60.0" mnemonicParsing="false" prefWidth="25.0" text="Add">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#addPart" prefWidth="25.0" text="Add">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button minWidth="60.0" mnemonicParsing="false" prefWidth="25.0" text="Modify">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#updatePart" prefWidth="25.0" text="Modify">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -90,27 +89,27 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <TableView layoutX="7.0" layoutY="71.0" prefHeight="200.0" prefWidth="475.0">
+            <TableView fx:id="tableViewProduct" layoutX="7.0" layoutY="71.0" prefHeight="200.0" prefWidth="475.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Part ID" />
-                  <TableColumn prefWidth="75.0" text="Part Name" />
-                  <TableColumn prefWidth="108.33331298828125" text="Inventory Level" />
-                  <TableColumn prefWidth="138.0" text="Price/Cost Per Unit" />
+                  <TableColumn fx:id="productIdColumn" prefWidth="75.0" text="Part ID" />
+                  <TableColumn fx:id="productNameColumn" prefWidth="75.0" text="Part Name" />
+                  <TableColumn fx:id="productInvLevelColumn" prefWidth="108.33331298828125" text="Inventory Level" />
+                  <TableColumn fx:id="productPricePerUnitColumn" prefWidth="138.0" text="Price/Cost Per Unit" />
                </columns>
             </TableView>
             <HBox layoutX="274.0" layoutY="283.0" prefHeight="30.0" prefWidth="202.0">
                <children>
-                  <Button minWidth="60.0" mnemonicParsing="false" prefWidth="25.0" text="Add">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#addProduct" prefWidth="25.0" text="Add">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button minWidth="60.0" mnemonicParsing="false" prefWidth="25.0" text="Modify">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#updateProduct" prefWidth="25.0" text="Modify">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button minWidth="60.0" mnemonicParsing="false" prefWidth="25.0" text="Delete" />
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#exitProgram" prefWidth="25.0" text="Delete" />
                </children>
             </HBox>
          </children>

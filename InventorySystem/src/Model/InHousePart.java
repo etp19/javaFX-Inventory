@@ -18,6 +18,16 @@ import javafx.beans.property.StringProperty;
 public class InHousePart extends Part {
     private final IntegerProperty machineID;
     
+    public InHousePart(){
+        this.id = new SimpleIntegerProperty(0);
+        this.name = new SimpleStringProperty("");
+        this.price = new SimpleDoubleProperty(0);
+        this.stock = new SimpleIntegerProperty(0);
+        this.min = new SimpleIntegerProperty(0);
+        this.max = new SimpleIntegerProperty(0);
+        this.machineID = new SimpleIntegerProperty(0);
+    }
+    
     public InHousePart(int id, String name, double price, int stock, int min, int max, int machineId){
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
