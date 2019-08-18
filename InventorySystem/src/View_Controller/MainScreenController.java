@@ -8,7 +8,6 @@ package View_Controller;
 import Model.Inventory;
 import Model.Part;
 import Model.Product;
-import com.sun.istack.internal.Nullable;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -17,15 +16,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.fxml.Initializable; 
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -35,6 +34,9 @@ import javafx.stage.Stage;
  */
 public class MainScreenController implements Initializable{
     
+    // form field
+    @FXML TextField partSearch;
+    @FXML TextField productSearch;
     // table config for part
     @FXML private TableView<Part> tableViewPart;
     @FXML private TableColumn<Part, Integer> partIdColumn;
@@ -48,7 +50,7 @@ public class MainScreenController implements Initializable{
     @FXML private TableColumn<Product, String> productNameColumn;
     @FXML private TableColumn<Product, Integer> productInvLevelColumn;
     @FXML private TableColumn<Product, Double> productPricePerUnitColumn;
-   
+    
     private static int index = -1;
     
     public static int selectedIndex() {
@@ -56,7 +58,7 @@ public class MainScreenController implements Initializable{
     }
        
     @FXML
-    void initializePartView(ActionEvent event, @Nullable Part part) throws IOException{
+    void initializePartView(ActionEvent event, Part part) throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("PartScreen.fxml"));
         Parent part_page_parent = loader.load();  
@@ -77,7 +79,7 @@ public class MainScreenController implements Initializable{
     }
     
     @FXML
-    void initializeProductView(ActionEvent event, @Nullable Product product) throws IOException {
+    void initializeProductView(ActionEvent event, Product product) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ProductScreen.fxml"));
         Parent product_page_parent = loader.load();  
@@ -164,7 +166,22 @@ public class MainScreenController implements Initializable{
             alert.setHeaderText("Please select a part from the existing list to delete"); 
             alert.showAndWait();
         }
-    }   
+    }
+    
+    @FXML
+    void searchParts(ActionEvent event) {
+        String term = partSearch.getText();
+        ObservableList foundParts = Inventory.lookupPart(term);
+        if(foundParts.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.setTitle("No Part match found");
+            alert.setHeaderText("No Part Names found matching " + term); 
+            alert.showAndWait();
+        } else {
+            tableViewPart.setItems(foundParts);
+        }
+    }
     
     // Product CRUD section
     @FXML
@@ -189,9 +206,8 @@ public class MainScreenController implements Initializable{
     
     @FXML
     void deleteProduct(ActionEvent event) {
-        //make Product has no parts, alert if true
-        Product selectedProduct = tableViewProduct.getSelectionModel().getSelectedItem();
         
+        Product selectedProduct = tableViewProduct.getSelectionModel().getSelectedItem();    
         if(selectedProduct != null) {
             if(selectedProduct.getAllAssociatedParts().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -220,6 +236,22 @@ public class MainScreenController implements Initializable{
             alert.showAndWait();
         }
     }
+    
+    @FXML
+    void searchProducts(ActionEvent event) {
+        String term = productSearch.getText();
+        ObservableList foundProducts = Inventory.lookupProduct(term);
+        if(foundProducts.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.setTitle("No Product match found");
+            alert.setHeaderText("No Product Names found matching " + term); 
+            alert.showAndWait();
+        } else {
+            tableViewProduct.setItems(foundProducts);
+        }
+    }
+    // end crud operations
     
     @FXML
     void exitProgram(ActionEvent event) {
@@ -273,5 +305,8 @@ public class MainScreenController implements Initializable{
         }
         return isFound;
     }
+    
+    // set defaults for part and product
+    
     
 }

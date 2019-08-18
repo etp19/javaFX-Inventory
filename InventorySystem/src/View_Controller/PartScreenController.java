@@ -10,15 +10,11 @@ import static View_Controller.MainScreenController.selectedIndex;
 import Model.OutsourcedPart;
 import Model.Inventory;
 import Model.Part;
-import com.sun.istack.internal.Nullable;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Optional;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -36,52 +32,25 @@ import javafx.stage.Stage;
  *
  * @author Ed
  */
-public class PartScreenController implements Initializable {
-
-    private int partID;
+public class PartScreenController {
+   
     
-    @FXML
-    private TextField partId;
-
-    @FXML
-    private TextField partName;
-
-    @FXML
-    private TextField partCost;
-
-    @FXML
-    private TextField partMachineId;
-
-    @FXML
-    private TextField partCompany;
-
-    @FXML
-    private TextField partInv;
-
-    @FXML
-    private TextField partMin;
-
-    @FXML
-    private TextField partMax;
-
-    @FXML
-    private RadioButton inhousePart;
-
-    @FXML
-    private RadioButton outsourcedPart;
-
-    @FXML
-    private Label partLabel;
-
-    @FXML
-    private ToggleGroup partTypeGroup;
+    // form fields
+    @FXML private TextField partId;
+    @FXML private TextField partName;
+    @FXML private TextField partCost;
+    @FXML private TextField partMachineId;
+    @FXML private TextField partCompany;
+    @FXML private TextField partInv;
+    @FXML private TextField partMin;
+    @FXML private TextField partMax;
+    @FXML private RadioButton inhousePart;
+    @FXML private RadioButton outsourcedPart;
+    @FXML private Label partLabel;
+    @FXML private ToggleGroup partTypeGroup;
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        partID = Inventory.getPartIDCount();
-    }
-
-    void initializePart(@Nullable Part part) {
+    // Initializations
+    void initializePart(Part part) {
         if (part == null) {
             this.partLabel.setText("Add Part");
 
@@ -111,7 +80,83 @@ public class PartScreenController implements Initializable {
         }
 
     }
+    
+    @FXML
+    void initializeMainView(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("MainScreen.fxml"));
+        Parent product_page_parent = loader.load();
 
+        Scene main_page_scene = new Scene(product_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        MainScreenController controller = loader.getController();
+        controller.startMain(app_stage);
+
+        app_stage.hide(); //optional
+        app_stage.setScene(main_page_scene);
+        app_stage.show();
+    }
+
+    // Crud starts here     
+    @FXML void savePart(){
+        Boolean isValid = checkPartBeforeSave(this.partName.getText(),
+        this.partMin.getText(), this.partMax.getText(), this.partInv.getText(), 
+        this.partCost.getText(), this.partCompany.getText(), this.partMachineId.getText());
+        if (isValid) {
+            if (this.partTypeGroup.getSelectedToggle().equals(this.inhousePart)){
+                InHousePart part = new InHousePart();
+                part.setMachineId(Integer.parseInt(this.partMachineId.getText()));
+                //common mutators
+                part.setName(this.partName.getText());
+                part.setStock(Integer.parseInt(this.partInv.getText()));
+                part.setMin(Integer.parseInt(this.partMin.getText()));
+                part.setMax(Integer.parseInt(this.partMax.getText()));
+                part.setPrice(Double.parseDouble(this.partCost.getText()));
+                
+                if(this.partId.getText().length() == 0) {
+                    part.setId(Inventory.getPartIDCount());
+                    Inventory.addPart(part);
+                } else {
+                    part.setId(Integer.parseInt(this.partId.getText()));
+                    Inventory.updatePart(selectedIndex(), part);
+                }
+            } else {
+                OutsourcedPart part = new OutsourcedPart();
+                part.setCompanyName(this.partCompany.getText());
+                //common mutators
+                part.setName(this.partName.getText());
+                part.setStock(Integer.parseInt(this.partInv.getText()));
+                part.setMin(Integer.parseInt(this.partMin.getText()));
+                part.setMax(Integer.parseInt(this.partMax.getText()));
+                part.setPrice(Double.parseDouble(this.partCost.getText()));
+                
+                if(this.partId.getText().length() == 0) {
+                    part.setId(Inventory.getPartIDCount());
+                    Inventory.addPart(part);
+                } else {
+                    part.setId(Integer.parseInt(this.partId.getText()));
+                    Inventory.updatePart(selectedIndex(), part);
+                }
+            }
+        }       
+    }
+
+    @FXML
+    void cancelSavePart(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.NONE);
+        alert.setTitle("Confirm Part Cancel");
+        alert.setHeaderText("Please confirm you want to cancel editing parts");
+        alert.setContentText("Any unsaved changes will be lost");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            initializeMainView(event);
+        }
+    }
+    
+    // validations
     @FXML
     void checkForPartType() {
         if (this.partTypeGroup.getSelectedToggle().equals(this.inhousePart)) {
@@ -134,23 +179,6 @@ public class PartScreenController implements Initializable {
             alert.setTitle("Invalid Part Type");
             alert.setHeaderText("The Part Type selected is not valid");
         }
-    }
-
-    @FXML
-    void initializeMainView(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("MainScreen.fxml"));
-        Parent product_page_parent = loader.load();
-
-        Scene main_page_scene = new Scene(product_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        MainScreenController controller = loader.getController();
-        controller.startMain(app_stage);
-
-        //app_stage.hide(); //optional
-        app_stage.setScene(main_page_scene);
-        app_stage.show();
     }
     
     @FXML Boolean checkPartBeforeSave(String name, String min, String max, String inv, String price, String company, String machine){
@@ -234,62 +262,5 @@ public class PartScreenController implements Initializable {
         }
         
         return valid;
-    }
-    
-    @FXML void savePart(){
-        Boolean isValid = checkPartBeforeSave(this.partName.getText(),
-        this.partMin.getText(), this.partMax.getText(), this.partInv.getText(), 
-        this.partCost.getText(), this.partCompany.getText(), this.partMachineId.getText());
-        if (isValid) {
-            if (this.partTypeGroup.getSelectedToggle().equals(this.inhousePart)){
-                InHousePart part = new InHousePart();
-                part.setMachineId(Integer.parseInt(this.partMachineId.getText()));
-                //common mutators
-                part.setName(this.partName.getText());
-                part.setStock(Integer.parseInt(this.partInv.getText()));
-                part.setMin(Integer.parseInt(this.partMin.getText()));
-                part.setMax(Integer.parseInt(this.partMax.getText()));
-                part.setPrice(Double.parseDouble(this.partCost.getText()));
-                
-                if(this.partId.getText().length() == 0) {
-                    part.setId(Inventory.getPartIDCount());
-                    Inventory.addPart(part);
-                } else {
-                    part.setId(Integer.parseInt(this.partId.getText()));
-                    Inventory.updatePart(selectedIndex(), part);
-                }
-            } else {
-                OutsourcedPart part = new OutsourcedPart();
-                part.setCompanyName(this.partCompany.getText());
-                //common mutators
-                part.setName(this.partName.getText());
-                part.setStock(Integer.parseInt(this.partInv.getText()));
-                part.setMin(Integer.parseInt(this.partMin.getText()));
-                part.setMax(Integer.parseInt(this.partMax.getText()));
-                part.setPrice(Double.parseDouble(this.partCost.getText()));
-                
-                if(this.partId.getText().length() == 0) {
-                    part.setId(Inventory.getPartIDCount());
-                    Inventory.addPart(part);
-                } else {
-                    part.setId(Integer.parseInt(this.partId.getText()));
-                    Inventory.updatePart(selectedIndex(), part);
-                }
-            }
-        }       
-    }
-
-    @FXML
-    void cancelSavePart(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.initModality(Modality.NONE);
-        alert.setTitle("Confirm Part Cancel");
-        alert.setHeaderText("Please confirm you want to cancel editing parts");
-        alert.setContentText("Any unsaved changes will be lost");
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.get() == ButtonType.OK) {
-            initializeMainView(event);
-        }
     }
 }

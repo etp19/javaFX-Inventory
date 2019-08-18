@@ -26,12 +26,12 @@
          <children>
             <HBox layoutX="237.0" layoutY="14.0" prefHeight="30.0" prefWidth="239.0">
                <children>
-                  <Button minWidth="60.0" mnemonicParsing="false" prefHeight="25.0" text="Search">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#searchParts" prefHeight="25.0" text="Search">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <TextField>
+                  <TextField fx:id="partSearch">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -63,7 +63,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button minWidth="60.0" mnemonicParsing="false" prefWidth="25.0" text="Delete" />
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#deletePart" prefWidth="25.0" text="Delete" />
                </children>
             </HBox>
          </children>
@@ -72,12 +72,12 @@
          <children>
             <HBox layoutX="237.0" layoutY="14.0" prefHeight="30.0" prefWidth="239.0">
                <children>
-                  <Button minWidth="60.0" mnemonicParsing="false" prefHeight="25.0" text="Search">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#searchProducts" prefHeight="25.0" text="Search">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <TextField>
+                  <TextField fx:id="productSearch">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -109,7 +109,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#exitProgram" prefWidth="25.0" text="Delete" />
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#deleteProduct" prefWidth="25.0" text="Delete" />
                </children>
             </HBox>
          </children>

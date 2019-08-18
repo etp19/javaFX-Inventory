@@ -5,39 +5,36 @@
  */
 package inventorysystem;
 
-import View_Controller.MainScreenController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import java.io.IOException;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import View_Controller.MainScreenController;
-//import View_Controller.PartScreenController;
-import javafx.stage.Modality;
+
 /**
  *
  * @author Eduardo
  */
 public class InventorySystem extends Application {
+    private Stage mainStage;
+    private AnchorPane mainScreen;
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/View_Controller/MainScreen.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.setTitle("Inventory Managment System");
-        stage.show();
+        this.mainStage = stage;
+        this.mainStage.setTitle("Inventory Managment System");
+        showMainScreen(stage);  
+    }
+    
+    public void showMainScreen(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(InventorySystem.class.getResource("/View_Controller/MainScreen.fxml"));
+        this.mainScreen = (AnchorPane) loader.load();  
+
+        // Give the controller access to the main app.
+        MainScreenController controller = loader.getController();
+        controller.startMain(stage); 
     }
 
     /**
